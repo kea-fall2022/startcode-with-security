@@ -5,7 +5,6 @@ import dat3.security.dto.UserWithRolesRequest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @Entity
-@SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DISCRIMINATOR_TYPE")
 public class UserWithRoles implements UserDetails {
