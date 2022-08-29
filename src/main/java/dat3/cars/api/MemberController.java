@@ -58,4 +58,9 @@ public class MemberController {
      return response;
   }
 
+  @DeleteMapping("/{username}")
+  public void deleteMemberByUsername(@PathVariable String username){
+    memberService.deleteByUsername(username);
+  }
+
 }

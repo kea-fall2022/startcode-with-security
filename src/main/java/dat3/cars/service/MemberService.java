@@ -68,4 +68,8 @@ public class MemberService {
     member.setRanking(value);
     memberRepository.save(member);
   }
+
+  public void deleteByUsername(String username) {
+    memberRepository.existsById(username);
+  }
 }
