@@ -35,7 +35,6 @@ public class MemberService {
       newMember = memberRepository.save(newMember);
 
       return new MemberResponse(newMember, false);
-
   }
 
 
@@ -61,8 +60,8 @@ public class MemberService {
   public MemberResponse findMemberByUsername(@PathVariable String username) throws Exception {
     Member found = memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     return new MemberResponse(found,false);
-
   }
+
   public void setRankingForUser(String username, int value) {
     Member member = memberRepository.findById(username).orElseThrow(()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username already exist"));
     member.setRanking(value);

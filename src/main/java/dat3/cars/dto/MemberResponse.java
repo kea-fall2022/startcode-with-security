@@ -28,6 +28,7 @@ public class MemberResponse {
   LocalDateTime edited;
   Integer ranking;
 
+  //Convert Member Entity to Member DTO
   public MemberResponse(Member m, boolean includeAll) {
     this.username = m.getUsername();
     this.email = m.getEmail();

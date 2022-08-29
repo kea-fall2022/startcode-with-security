@@ -33,6 +33,7 @@ public class MemberController {
      return  body.getUsername() + " was created";
   }
   //Security Admin, but when using security whe can get the username for the "logged in" user and let him edit him self
+
   @PutMapping("/{username}")
   public ResponseEntity<Boolean> editMember(@RequestBody MemberRequest body, @PathVariable String username){
     memberService.editMember(body,username);
@@ -40,16 +41,29 @@ public class MemberController {
   }
 
   //Security ADMIN
+
   @PatchMapping("/ranking/{username}/{value}")
-  public void setRankingForUser(@PathVariable String username,@PathVariable int value){
+  public void setRankingForUser(@PathVariable String username, @PathVariable int value){
     memberService.setRankingForUser(username,value);
   }
 
   //Security ADMIN
+
   @GetMapping
   public List<MemberResponse> getMembers(){
     return memberService.getMembers();
   }
+
+
+  /* JUST TO SHOW HOW NOT TO DO IT
+  @Autowired
+  MemberRepository memberRepository;
+  @GetMapping("/bad")
+  public List<Member> getMembersBad(){
+    return memberRepository.findAll();
+  }
+  ***********/
+
 
   //Security Admin, but when using security whe can get the username for the "logged in" user and let him edit himself
   @GetMapping(path = "/{username}")
