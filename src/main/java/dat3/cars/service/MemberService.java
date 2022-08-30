@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class MemberService {
   private MemberRepository memberRepository;
@@ -38,7 +39,6 @@ public class MemberService {
 
   }
 
-
  public void editMember(MemberRequest body, String username){
     Member member = memberRepository.findById(username).orElseThrow(()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username already exist"));
     if(!body.getUsername().equals(username)){
@@ -53,16 +53,19 @@ public class MemberService {
     member.setZip(body.getZip());
     memberRepository.save(member);
   }
+
   public List<MemberResponse> getMembers() {
     List<Member> members = memberRepository.findAll();
     List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
     return response;
   }
+
   public MemberResponse findMemberByUsername(@PathVariable String username) throws Exception {
     Member found = memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     return new MemberResponse(found,false);
 
   }
+
   public void setRankingForUser(String username, int value) {
     Member member = memberRepository.findById(username).orElseThrow(()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username already exist"));
     member.setRanking(value);
