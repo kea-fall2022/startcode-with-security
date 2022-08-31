@@ -22,7 +22,7 @@ public class MemberController {
   //@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
   @PostMapping // same as above when you are using @RestController
   public MemberResponse addMember(@RequestBody MemberRequest body) {
-     return memberService.addMember(body);
+    return memberService.addMember(body);
   }
 
 
@@ -42,7 +42,9 @@ public class MemberController {
   //Security ADMIN
   @GetMapping
   public List<MemberResponse> getMembers(){
+
     return memberService.getMembers();
+
   }
 
 
@@ -55,7 +57,7 @@ public class MemberController {
   }
   ***********/
 
-
+  //../api/members/{username}
   //Security Admin, but when using security whe can get the username for the "logged in" user and let him edit himself
   @GetMapping(path = "/{username}")
   public MemberResponse getMemberById(@PathVariable String username) throws Exception { //Obviously we need to be able to limit this in a system with thousands of members
