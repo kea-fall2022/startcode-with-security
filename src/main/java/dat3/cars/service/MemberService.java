@@ -40,7 +40,7 @@ public class MemberService {
 
  public void editMember(MemberRequest body, String username){
     Member member = memberRepository.findById(username).orElseThrow(
-            ()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username already exist"));
+            ()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username dont exist"));
 
     if(!body.getUsername().equals(username)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
