@@ -39,9 +39,7 @@ public class MemberService {
   }
 
  public void editMember(MemberRequest body, String username){
-    Member member = memberRepository.findById(username).orElseThrow(
-            ()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username dont exist"));
-
+    Member member = memberRepository.findById(username).orElseThrow(()->  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username already exist"));
     if(!body.getUsername().equals(username)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
     }
@@ -57,9 +55,7 @@ public class MemberService {
 
   public List<MemberResponse> getMembers() {
     List<Member> members = memberRepository.findAll();
-
     List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
-
     return response;
   }
 
@@ -75,6 +71,6 @@ public class MemberService {
   }
 
   public void deleteByUsername(String username) {
-    memberRepository.deleteById(username);
+    memberRepository.existsById(username);
   }
 }

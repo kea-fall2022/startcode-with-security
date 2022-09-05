@@ -38,10 +38,4 @@ public class Car {
   @UpdateTimestamp
   LocalDateTime edited;
 
-  public Car(String brand, String model, double pricePrDay, double bestDiscount) {
-    this.brand = brand;
-    this.model = model;
-    this.pricePrDay = pricePrDay;
-    this.bestDiscount = bestDiscount;
-  }
 }
