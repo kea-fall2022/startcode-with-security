@@ -2,9 +2,7 @@ package dat3.security.entity;
 
 
 import dat3.security.dto.UserWithRolesRequest;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DISCRIMINATOR_TYPE")
@@ -33,14 +32,14 @@ public class UserWithRoles implements UserDetails {
 
     @Id
     @Column(nullable = false,length = 50,unique = true)
-    private String username;
+    String username;
 
     @Column(nullable = false,length = 50,unique = true)
-    private String email;
+    String email;
 
     //60 = length of a bcrypt encoded password
     @Column(nullable = false, length = 60)
-    private String password;
+    String password;
 
     private boolean enabled= true;
 
