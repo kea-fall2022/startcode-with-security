@@ -4,28 +4,35 @@ import dat3.cars.entity.Car;
 import dat3.cars.entity.Member;
 import dat3.cars.repository.CarRepository;
 import dat3.cars.repository.MemberRepository;
+import dat3.cars.service.ReservationService;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.security.repository.UserWithRolesRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
 
   UserWithRolesRepository userWithRolesRepository;
   MemberRepository memberRepository;
-
   CarRepository carRepository;
+  ReservationService reservationService;
+
   String passwordUsedByAll;
 
   public SetupDevUsers(UserWithRolesRepository userWithRolesRepository,
                        MemberRepository memberRepository,
-                       CarRepository carRepository) {
+                       CarRepository carRepository,
+                       ReservationService reservationService) {
     this.userWithRolesRepository = userWithRolesRepository;
     this.memberRepository = memberRepository;
     this.carRepository = carRepository;
+    this.reservationService = reservationService;
     passwordUsedByAll = "test12";
   }
 
@@ -42,6 +49,15 @@ public class SetupDevUsers implements ApplicationRunner {
             .build();
 
     carRepository.save(car1);
+
+    //Reserve the car
+    reservationService.reserveCar(m1.getUsername(), car1.getId(), LocalDate.of(2022, 10,10));
+    try {
+      reservationService.reserveCar(m1.getUsername(), car1.getId(), LocalDate.of(2022, 10, 10));
+    } catch (ResponseStatusException ex){
+      System.out.println("Car was already reserved");
+    }
+
     setupUserWithRoleUsers();
   }
 

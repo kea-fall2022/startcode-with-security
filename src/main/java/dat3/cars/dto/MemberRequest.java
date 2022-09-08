@@ -1,5 +1,6 @@
 package dat3.cars.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.cars.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberRequest {
   String username;
   String email;

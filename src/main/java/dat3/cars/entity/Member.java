@@ -4,8 +4,12 @@ package dat3.cars.entity;
 import dat3.security.entity.UserWithRoles;
 import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +40,14 @@ public class Member extends UserWithRoles {
 
   private boolean approved;
   private int ranking;
+
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  List<Reservation> reservations = new ArrayList<>();
+
+  public void addReservation(Reservation reservation) {
+    reservations.add(reservation);
+    //reservation.setMember(this);
+  }
 
   public Member(String user, String password, String email, String firstName, String lastName, String street, String city, String zip) {
     super(user, password, email);
