@@ -45,10 +45,12 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    //This line is added to make the h2-console work (if needed)
+    http.headers().frameOptions().disable();
+
     http
-            //.cors().and()
             //.csrf((csrf) -> csrf.ignoringAntMatchers("/api/auth/login"))
-            .csrf().disable()
+            .cors().and().csrf().disable()
             .httpBasic(Customizer.withDefaults())
             //.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -62,12 +64,17 @@ public class SecurityConfig {
             .jwtAuthenticationConverter(authenticationConverter());
 
     http.authorizeHttpRequests((authorize) -> authorize
+            //Required in order to use the h2-console
+            .antMatchers("/h2*/**").permitAll()
+
+            .antMatchers("/").permitAll() //Allow the default index.html file
+
             .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-            //.antMatchers("/", "/**").permitAll()
-            .antMatchers("/error").permitAll());
-//                .antMatchers(HttpMethod.GET, "/api/demouser/user-only").hasAuthority("USER")
-//                .antMatchers(HttpMethod.GET, "/api/demouser/admin-only").hasAuthority("ADMIN")
-//                .anyRequest().authenticated());
+            .antMatchers("/error").permitAll() //This effectively disables security
+
+            //Switch uncommenting og the two lines below to turn security on/off
+            .antMatchers("/", "/**").permitAll());
+            //.anyRequest().authenticated());
 
     return http.build();
   }
