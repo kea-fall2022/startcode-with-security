@@ -40,14 +40,14 @@ public class CarService {
   public List<CarResponse> getCars(boolean includeAll) {
     List<Car> cars = carRepository.findAll();
     List<CarResponse> response  = cars.stream().map(car -> new CarResponse(car,includeAll)).collect(Collectors.toList());
-
     //See MemberService for how to do this with streams and map
     return response;
   }
 
   public CarResponse findCarById(int id, boolean includeAll) throws Exception {
-    Car found = carRepository.findById(id).orElseThrow(()->
-            new ResponseStatusException(HttpStatus.NOT_FOUND,"Car not found"));
+//    Car found = carRepository.findById(id).orElseThrow(()->
+//            new ResponseStatusException(HttpStatus.NOT_FOUND,"Car not found"));
+    Car found = carRepository.findById(id).get();
     return new CarResponse(found,includeAll);
   }
 

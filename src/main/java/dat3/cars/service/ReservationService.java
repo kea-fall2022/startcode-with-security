@@ -33,9 +33,9 @@ public class ReservationService {
     //Observe in the following, this strategy requires two round trips to the database
     Car car = carRepository.findById(carId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No car with this id found"));
-    if(reservationRepository.existsByCarIdAndRentalDate(car.getId(),dateToReserve)){
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car is already reserved on this date");
-    }
+
+    if(reservationRepository.existsByCarIdAndRentalDate(car.getId(),dateToReserve)){}
+
     Reservation reservation = new Reservation(member,car,dateToReserve);
     Reservation res = reservationRepository.save(reservation);
     return new ReservationResponse(res);

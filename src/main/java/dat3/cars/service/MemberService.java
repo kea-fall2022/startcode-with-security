@@ -31,8 +31,8 @@ public class MemberService {
       if(memberRepository.existsByEmail(memberRequest.getEmail())){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this Email already exist");
       }
-
-      Member newMember = MemberRequest.getMemberEntity(memberRequest);
+      Member newMember = null;
+      //Member newMember = MemberRequest.getMemberEntity(memberRequest);
       newMember = memberRepository.save(newMember);
       MemberResponse res =  new MemberResponse(newMember, false,true);
       return res;
