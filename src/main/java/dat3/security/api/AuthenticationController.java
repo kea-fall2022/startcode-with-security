@@ -23,6 +23,7 @@ import static java.util.stream.Collectors.joining;
 
 @RestController
 @RequestMapping("/api/auth/")
+@CrossOrigin
 public class AuthenticationController {
 
   @Value("${app.token-issuer}")
