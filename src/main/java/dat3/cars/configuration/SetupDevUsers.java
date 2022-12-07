@@ -39,6 +39,7 @@ public class SetupDevUsers implements ApplicationRunner {
   @Override
   public void run(ApplicationArguments args) {
     Member m1 = new Member("member1", passwordUsedByAll, "memb1@a.dk", "Kurt", "Wonnegut", "Lyngbyvej 2", "Lynbby", "2800");
+    m1.addRole(Role.USER);
     memberRepository.save(m1);
 
     Car car1 = Car.builder()

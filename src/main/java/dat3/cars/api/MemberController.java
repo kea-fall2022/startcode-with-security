@@ -20,10 +20,8 @@ public class MemberController {
   }
 
   //Security --> Non Authenticated
-  //@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
   @PostMapping // same as above when you are using @RestController
   public MemberResponse addMember(@RequestBody MemberRequest body) {
-
     return memberService.addMember(body);
   }
 

@@ -72,9 +72,19 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
             .antMatchers("/error").permitAll() //This effectively disables security
 
+            .antMatchers("/api/cars/admin/**").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/cars/").hasAuthority("ADMIN")
+            .antMatchers("/api/members").hasAuthority("ADMIN")
+
+            .antMatchers(HttpMethod.GET,"/api/reservations/users-reservations").hasAuthority("USER")
+            .antMatchers(HttpMethod.POST,"/api/reservations/").hasAuthority("USER")
+
+            .antMatchers(HttpMethod.GET,"/api/cars").hasAuthority("USER")
+
+
             //Switch uncommenting og the two lines below to turn security on/off
-            .antMatchers("/", "/**").permitAll());
-            //.anyRequest().authenticated());
+            //.antMatchers("/", "/**").permitAll());
+            .anyRequest().authenticated());
 
     return http.build();
   }
@@ -115,13 +125,11 @@ public class SecurityConfig {
     return jwtDecoder;
   }
 
-
   //TBD --> IS THIS THE RIGHT WAY
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
           throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
-
 
 }
